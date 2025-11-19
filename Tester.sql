@@ -50,14 +50,6 @@ CREATE TABLE Flight (
     FOREIGN KEY (Route_ID) REFERENCES Flight_Routes(Route_ID)
 );
 
-------------------------------------------------------------
--- Schedule
--- PK Format:    YYYYMMZZZZ
-    -- YYYY: current year
-    -- MM:   current month 
-    -- ZZZZ: identifying sequence of numbers (auto incremented)  
--- Example: 2025010001, 2025010002, 2025010067, 2025010068
-------------------------------------------------------------
 CREATE TABLE Schedule (
     Schedule_ID INT PRIMARY KEY AUTO_INCREMENT,
     Flight_ID VARCHAR(6) NOT NULL,
@@ -65,7 +57,7 @@ CREATE TABLE Schedule (
     FOREIGN KEY (Flight_ID) REFERENCES Flight(Flight_ID)
 );
 
--- Populate airport and flight routes -- 
+-- Populate Flight Routes --  
 
 INSERT AIRPORT (Airport_ID, City, Country)
 VALUES ("TOY", "Tokyo", "Japan"); 
@@ -79,19 +71,62 @@ VALUES("TOY", "MNL");
 INSERT INTO FLIGHT(Flight_ID, Arrival_Time, Departure_Time, Base_Cost, Route_ID)
 VALUES("MA 800", "2:30:00", "23:00:00", 1000.50, 1);
 
--- check if populated correctly -- 
-SELECT * FROM AIRPORT; 
-SELECT * FROM FLIGHT_ROUTES; 
-SELECT * FROM FLIGHT; 
-
 INSERT INTO SCHEDULE(Schedule_ID, Flight_ID, Date_of_Flight) 
 VALUES (2025110001, "MA 800", "2026-01-01"); 
 
 INSERT INTO SCHEDULE(Flight_ID, Date_of_Flight)
 VALUES ("MA 800", "2026-01-02");
 
-INSERT INTO SCHEDULE(Schedule_ID, Flight_ID, Date_of_Flight)
-Values(2025120001, "MA 800", "2026-03-01");
+-- check if populated correctly -- 
+SELECT * FROM AIRPORT; 
+SELECT * FROM FLIGHT_ROUTES; 
+SELECT * FROM FLIGHT; 
+SELECT * FROM SCHEDULE; 
 
-INSERT INTO SCHEDULE(Flight_ID, Date_of_Flight)
-VALUES ("MA 800", "2026-03-02");
+
+-- Flight Booking -- 
+CREATE TABLE Passenger (
+    Passenger_ID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    Last_Name VARCHAR(50) NOT NULL,
+    First_Name VARCHAR(50) NOT NULL,
+    Middle_Initial CHAR(2),
+    Gender VARCHAR(10),
+    Date_of_Birth DATE NOT NULL
+);
+
+CREATE TABLE Booking (
+    Booking_ID INT PRIMARY KEY AUTO_INCREMENT=1000,
+    Passenger_ID INT NOT NULL,
+    Date_of_Booking TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    Total_Cost DECIMAL(10, 2) NOT NULL,
+    FOREIGN KEY (Passenger_ID) REFERENCES Passenger(Passenger_ID)
+);
+
+CREATE TABLE Flight_Booking (
+    Booking_ID INT,
+    Schedule_ID INT,
+    PRIMARY KEY (Booking_ID, Schedule_ID),
+    FOREIGN KEY (Booking_ID) REFERENCES Booking(Booking_ID),
+    FOREIGN KEY (Schedule_ID) REFERENCES Schedule(Schedule_ID)
+);
+
+CREATE TABLE Additional_Item (
+    Item_ID INT PRIMARY KEY AUTO_INCREMENT,
+    Description VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE Inclusion (
+    Booking_ID INT,
+    Item_ID INT,
+    Cost DECIMAL(10, 2) NOT NULL,
+    PRIMARY KEY (Booking_ID, Item_ID),
+    FOREIGN KEY (Booking_ID) REFERENCES Booking(Booking_ID),
+    FOREIGN KEY (Item_ID) REFERENCES Additional_Item(Item_ID)
+);
+
+INSERT INTO Passenger(Last_Name, First_Name, Middle_Initial, Gender, Date_of_Birth)
+VALUES ("Carlito", "Francisco", "P", "Male", "12-21-2025"); 
+
+INSERT INTO BOOKING(Date_of_Booking)
+VALUES ("Date_of_Booking")
+
