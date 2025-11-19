@@ -32,7 +32,7 @@ CREATE TABLE Airport (
 -- Flight Routes
 -- PK Format:    XXXX
     -- Auto-Incrementing Route Numbers
--- Example: 001, 002, 003...
+-- Example: 1, 2, 3...
 ------------------------------------------------------------
 CREATE TABLE Flight_Routes (
     Route_ID INT PRIMARY KEY AUTO_INCREMENT,
@@ -67,6 +67,7 @@ CREATE TABLE Flight (
 
     Base_Cost DECIMAL(10, 2) NOT NULL,
     Route_ID INT NOT NULL,
+
     FOREIGN KEY (Route_ID) REFERENCES Flight_Routes(Route_ID)
 );
 
@@ -80,7 +81,7 @@ CREATE TABLE Flight (
 ------------------------------------------------------------
 CREATE TABLE Schedule (
     Schedule_ID INT PRIMARY KEY AUTO_INCREMENT,
-    Flight_ID INT NOT NULL,
+    Flight_ID VARCHAR(6) NOT NULL,
     Date_of_Flight DATE NOT NULL,
     FOREIGN KEY (Flight_ID) REFERENCES Flight(Flight_ID)
 );
@@ -107,10 +108,9 @@ CREATE TABLE Passenger (
 -- Example: 1000, 1067, 2032, 1088
 ------------------------------------------------------------
 CREATE TABLE Booking (
-    Booking_ID INT PRIMARY KEY AUTO_INCREMENT=1000,
+    Booking_ID INT PRIMARY KEY AUTO_INCREMENT,
     Passenger_ID INT NOT NULL,
-    Date_of_Booking TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    Total_Cost DECIMAL(10, 2) NOT NULL,
+    Date_of_Booking TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,    
     FOREIGN KEY (Passenger_ID) REFERENCES Passenger(Passenger_ID)
 );
 
