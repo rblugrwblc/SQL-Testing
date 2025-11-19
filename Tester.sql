@@ -1,3 +1,21 @@
+-- RESET
+DROP TABLE IF EXISTS Crew_Assignment;
+DROP TABLE IF EXISTS Flight_Assignment;
+DROP TABLE IF EXISTS Crew;
+DROP TABLE IF EXISTS Inclusion;
+DROP TABLE IF EXISTS Additional_Item;
+DROP TABLE IF EXISTS Flight_Booking;
+DROP TABLE IF EXISTS Booking;
+DROP TABLE IF EXISTS Passenger;
+DROP TABLE IF EXISTS Schedule;
+DROP TABLE IF EXISTS Flight;
+DROP TABLE IF EXISTS Flight_Routes;
+DROP TABLE IF EXISTS Airport;
+DROP DATABASE IF EXISTS MAGIS_AIR;
+
+CREATE DATABASE MAGIS_AIR;
+USE MAGIS_AIR;
+
 CREATE TABLE Airport (
     Airport_ID VARCHAR(3) PRIMARY KEY,
     City VARCHAR(50) NOT NULL, 
@@ -47,7 +65,7 @@ CREATE TABLE Schedule (
     FOREIGN KEY (Flight_ID) REFERENCES Flight(Flight_ID)
 );
 
--- populate airport and flight routes -- 
+-- Populate airport and flight routes -- 
 
 INSERT AIRPORT (Airport_ID, City, Country)
 VALUES ("TOY", "Tokyo", "Japan"); 
@@ -65,8 +83,6 @@ VALUES("MA 800", "2:30:00", "23:00:00", 1000.50, 1);
 SELECT * FROM AIRPORT; 
 SELECT * FROM FLIGHT_ROUTES; 
 SELECT * FROM FLIGHT; 
-
-
 
 INSERT INTO SCHEDULE(Schedule_ID, Flight_ID, Date_of_Flight) 
 VALUES (2025110001, "MA 800", "2026-01-01"); 
