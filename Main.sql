@@ -38,6 +38,7 @@ CREATE TABLE Flight_Routes (
     Route_ID INT PRIMARY KEY AUTO_INCREMENT,
     origin_Airport VARCHAR(3) NOT NULL,
     destination_Airport VARCHAR(3) NOT NULL,
+
     FOREIGN KEY (origin_Airport) REFERENCES Airport(Airport_ID),
     FOREIGN KEY (destination_Airport) REFERENCES Airport(Airport_ID)
 );
@@ -73,11 +74,11 @@ CREATE TABLE Flight (
 
 ------------------------------------------------------------
 -- Schedule
--- PK Format:    YYYYMMZZZZ
+-- PK Format:    YYYYMMZZZZZ
     -- YYYY: current year
     -- MM:   current month 
-    -- ZZZZ: identifying sequence of numbers (auto incremented)  
--- Example: 2025010001, 2025010002, 2025010067, 2025010068
+    -- ZZZZZ: identifying sequence of numbers (auto incremented)  
+-- Example: 20250100001, 20250100002, 20250100067, 20250100068
 ------------------------------------------------------------
 CREATE TABLE Schedule (
     Schedule_ID INT PRIMARY KEY AUTO_INCREMENT,
@@ -110,7 +111,7 @@ CREATE TABLE Passenger (
 CREATE TABLE Booking (
     Booking_ID INT PRIMARY KEY AUTO_INCREMENT,
     Passenger_ID INT NOT NULL,
-    Date_of_Booking TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,    
+    Date_of_Booking DATE NOT NULL DEFAULT (CURRENT_DATE),    
     FOREIGN KEY (Passenger_ID) REFERENCES Passenger(Passenger_ID)
 );
 
@@ -134,7 +135,8 @@ CREATE TABLE Flight_Booking (
 ------------------------------------------------------------
 CREATE TABLE Additional_Item (
     Item_ID INT PRIMARY KEY AUTO_INCREMENT,
-    Description VARCHAR(50) NOT NULL
+    Description VARCHAR(50) NOT NULL, 
+    Cost DECIMAL(10, 2) NULL
 );
 
 ------------------------------------------------------------
@@ -144,7 +146,7 @@ CREATE TABLE Additional_Item (
 CREATE TABLE Inclusion (
     Booking_ID INT,
     Item_ID INT,
-    Cost DECIMAL(10, 2) NOT NULL,
+    Quantity DECIMAL(10, 2) NOT NULL,
     PRIMARY KEY (Booking_ID, Item_ID),
     FOREIGN KEY (Booking_ID) REFERENCES Booking(Booking_ID),
     FOREIGN KEY (Item_ID) REFERENCES Additional_Item(Item_ID)
@@ -169,9 +171,9 @@ CREATE TABLE Crew (
     -- XXX: identifying sequence of numbers (Auto Incrementing) 
 -- Example: 067, 235, 729, 1092
 ------------------------------------------------------------
-CREATE TABLE Flight_Assignment (
+CREATE TABLE Assignment (
     Assignment_ID INT PRIMARY KEY AUTO_INCREMENT,
-    Schedule_ID INT NOT NULL,
+    Schedule_ID INT NOT NULL, -- should this be FLIGHT_ID?
     Date_of_Departure TIMESTAMP NOT NULL,
     FOREIGN KEY (Schedule_ID) REFERENCES Schedule(Schedule_ID)
 );

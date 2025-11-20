@@ -60,29 +60,41 @@ CREATE TABLE Schedule (
 -- Populate Flight Routes --  
 
 INSERT AIRPORT (Airport_ID, City, Country)
-VALUES ("TOY", "Tokyo", "Japan"); 
+VALUES ("SIN", "Changi", "Singapore"); 
 
 INSERT AIRPORT (Airport_ID, City, Country)
 VALUES ("MNL", "Manila", "Philippines"); 
 
+-- route id 1 
 INSERT INTO FLIGHT_ROUTES(origin_Airport, destination_Airport)
-VALUES("TOY", "MNL");
+VALUES("SIN", "MNL");
 
+-- route id 2
+INSERT INTO FLIGHT_ROUTES(origin_Airport, destination_Airport)
+VALUES("MNL", "SIN");
+
+-- MA 800 = SIN -> MNL
 INSERT INTO FLIGHT(Flight_ID, Arrival_Time, Departure_Time, Base_Cost, Route_ID)
-VALUES("MA 800", "2:30:00", "23:00:00", 1000.50, 1);
+VALUES("MA 800", "04:00:00", "00:45:00", 4276.00, 1);
 
+-- MA 801 = MNL -> SIN
+INSERT INTO FLIGHT(Flight_ID, Arrival_Time, Departure_Time, Base_Cost, Route_ID)
+VALUES("MA 801", "23:55:00", "20:25:00", 2088.00, 2);
+
+-- MA 801 happens on dec 23
 INSERT INTO SCHEDULE(Schedule_ID, Flight_ID, Date_of_Flight) 
-VALUES (2025110001, "MA 800", "2026-01-01"); 
+VALUES (2025120001, "MA 801", "2025-12-23"); 
 
-INSERT INTO SCHEDULE(Flight_ID, Date_of_Flight)
-VALUES ("MA 800", "2026-01-02");
+-- MA 800 happens on dec 24
+-- PK: 2025120002
+INSERT INTO SCHEDULE(Flight_ID, Date_of_Flight) 
+VALUES ("MA 800", "2025-12-25"); 
 
 -- check if populated correctly -- 
 SELECT * FROM AIRPORT; 
 SELECT * FROM FLIGHT_ROUTES; 
 SELECT * FROM FLIGHT; 
 SELECT * FROM SCHEDULE; 
-
 
 -- Flight Booking -- 
 CREATE TABLE Passenger (
@@ -95,10 +107,9 @@ CREATE TABLE Passenger (
 );
 
 CREATE TABLE Booking (
-    Booking_ID INT PRIMARY KEY AUTO_INCREMENT=1000,
+    Booking_ID INT PRIMARY KEY AUTO_INCREMENT,
     Passenger_ID INT NOT NULL,
-    Date_of_Booking TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    Total_Cost DECIMAL(10, 2) NOT NULL,
+    Date_of_Booking DATE NOT NULL DEFAULT (CURRENT_DATE),    
     FOREIGN KEY (Passenger_ID) REFERENCES Passenger(Passenger_ID)
 );
 
@@ -112,21 +123,55 @@ CREATE TABLE Flight_Booking (
 
 CREATE TABLE Additional_Item (
     Item_ID INT PRIMARY KEY AUTO_INCREMENT,
-    Description VARCHAR(50) NOT NULL
+    Description VARCHAR(50) NOT NULL, 
+    Cost DECIMAL(10, 2) NULL
 );
 
 CREATE TABLE Inclusion (
     Booking_ID INT,
     Item_ID INT,
-    Cost DECIMAL(10, 2) NOT NULL,
+    Quantity DECIMAL(10, 2) NOT NULL,
     PRIMARY KEY (Booking_ID, Item_ID),
     FOREIGN KEY (Booking_ID) REFERENCES Booking(Booking_ID),
     FOREIGN KEY (Item_ID) REFERENCES Additional_Item(Item_ID)
 );
 
+-- insert into flight booking 
 INSERT INTO Passenger(Last_Name, First_Name, Middle_Initial, Gender, Date_of_Birth)
-VALUES ("Carlito", "Francisco", "P", "Male", "12-21-2025"); 
+VALUES ("Carlito", "Francisco", "P", "Male", "2025-12-21"); 
 
-INSERT INTO BOOKING(Date_of_Booking)
-VALUES ("Date_of_Booking")
+INSERT INTO Booking(Passenger_ID)
+VALUES (1); 
 
+INSERT INTO Flight_Booking(Booking_ID, Schedule_ID)
+VALUES(1, 2025120001); 
+
+INSERT INTO Flight_Booking(Booking_ID, Schedule_ID)
+VALUES(1, 2025120002); 
+
+INSERT INTO Additional_Item(Description, Cost)
+VALUES("Additional Baggage Allownace (5kg)", 474.00); 
+
+INSERT INTO Additional_Item(Description, Cost)
+VALUES("Terminal Fees", 273); 
+
+INSERT INTO Additional_Item(Description, Cost)
+VALUES("Travel Insurance", 208); 
+
+INSERT INTO INCLUSION(Booking_ID, Item_ID, Quantity)
+VALUES(1, 1, 2); 
+
+INSERT INTO INCLUSION(Booking_ID, Item_ID, Quantity)
+VALUES(1, 2, 1); 
+
+INSERT INTO INCLUSION(Booking_ID, Item_ID, Quantity)
+VALUES(1, 3, 1); 
+
+-- check insertion values -- 
+SELECT * FROM PASSENGER; 
+SELECT * FROM BOOKING; 
+SELECT * FROM Flight_Booking;
+SELECT * FROM Additional_Item; 
+SELECT * FROM Inclusion; 
+
+-- == i got too lazy to test crew assignment :( --
