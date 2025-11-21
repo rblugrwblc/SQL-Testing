@@ -48,7 +48,7 @@ CREATE TABLE Flight_Routes (
 -- PK Format:    MA XXXX
     -- MA:  denotes "Magis Air"
     -- XXX: denotes a unique identifying aircraft number 
--- Example: MA 017, MA 800, MA 167
+-- Example: MA 17, MA 800, MA 167
 -- Notes: 
     -- Duration takes into account if overlfow in time 
 ------------------------------------------------------------
@@ -78,7 +78,7 @@ CREATE TABLE Flight (
     -- YYYY: current year
     -- MM:   current month 
     -- ZZZZZ: identifying sequence of numbers (auto incremented)  
--- Example: 20250100001, 20250100002, 20250100067, 20250100068
+-- Example: 20250100001, 20250100002, 20250100067, 20250100076
 ------------------------------------------------------------
 CREATE TABLE Schedule (
     Schedule_ID INT PRIMARY KEY AUTO_INCREMENT,
@@ -91,10 +91,10 @@ CREATE TABLE Schedule (
 -- Passenger
 -- PK Format:   XXX
     -- XXX:  identifying sequence of numbers (Auto Incrementing) 
--- Example: 001, 002, 003, 067 
+-- Example: 1, 2, 3, 67 
 ------------------------------------------------------------
 CREATE TABLE Passenger (
-    Passenger_ID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    Passenger_ID INT PRIMARY KEY AUTO_INCREMENT,
     Last_Name VARCHAR(50) NOT NULL,
     First_Name VARCHAR(50) NOT NULL,
     Middle_Initial CHAR(2),
@@ -106,7 +106,7 @@ CREATE TABLE Passenger (
 -- Booking
 -- PK Format:    XXXX
 --   XXXX: identifying sequence of numbers (Auto Incrementing)
--- Example: 1000, 1067, 2032, 1088
+-- Example: 1, 67, 32, 1088
 ------------------------------------------------------------
 CREATE TABLE Booking (
     Booking_ID INT PRIMARY KEY AUTO_INCREMENT,
@@ -119,9 +119,9 @@ CREATE TABLE Booking (
 -- Flight Booking (Join Table)
 -- Composite Key: (Booking_ID, Schedule_ID)
 ------------------------------------------------------------
-CREATE TABLE Flight_Booking (
-    Booking_ID INT,
-    Schedule_ID INT,
+CREATE TABLE Flight_Schedule_Booking (
+    Booking_ID INT NOT NULL,
+    Schedule_ID INT NOT NULL,
     PRIMARY KEY (Booking_ID, Schedule_ID),
     FOREIGN KEY (Booking_ID) REFERENCES Booking(Booking_ID),
     FOREIGN KEY (Schedule_ID) REFERENCES Schedule(Schedule_ID)
@@ -173,8 +173,8 @@ CREATE TABLE Crew (
 ------------------------------------------------------------
 CREATE TABLE Assignment (
     Assignment_ID INT PRIMARY KEY AUTO_INCREMENT,
-    Schedule_ID INT NOT NULL, -- should this be FLIGHT_ID?
-    Date_of_Departure TIMESTAMP NOT NULL,
+    Schedule_ID INT NOT NULL,
+    Date_of_Departure TIMESTAMP NOT NULL DEFAULT (CURRENT_DATE),
     FOREIGN KEY (Schedule_ID) REFERENCES Schedule(Schedule_ID)
 );
 
@@ -183,9 +183,9 @@ CREATE TABLE Assignment (
 -- Composite Key: (Crew_ID, Assignment_ID)
 ------------------------------------------------------------
 CREATE TABLE Crew_Assignment (
-    Crew_ID INT,
-    Assignment_ID INT,
+    Crew_ID INT NOT NULL,
+    Assignment_ID INT NOT NULL,
     PRIMARY KEY (Crew_ID, Assignment_ID),
     FOREIGN KEY (Crew_ID) REFERENCES Crew(Crew_ID),
-    FOREIGN KEY (Assignment_ID) REFERENCES Flight_Assignment(Assignment_ID)
+    FOREIGN KEY (Assignment_ID) REFERENCES Assignment(Assignment_ID)
 );

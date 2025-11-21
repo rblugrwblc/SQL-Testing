@@ -26,6 +26,7 @@ CREATE TABLE Flight_Routes (
     Route_ID INT PRIMARY KEY AUTO_INCREMENT,
     origin_Airport VARCHAR(3) NOT NULL,
     destination_Airport VARCHAR(3) NOT NULL,
+
     FOREIGN KEY (origin_Airport) REFERENCES Airport(Airport_ID),
     FOREIGN KEY (destination_Airport) REFERENCES Airport(Airport_ID)
 );
@@ -90,6 +91,8 @@ VALUES (2025120001, "MA 801", "2025-12-23");
 INSERT INTO SCHEDULE(Flight_ID, Date_of_Flight) 
 VALUES ("MA 800", "2025-12-25"); 
 
+-- 1 contains MA 801 on Dec 23 
+
 -- check if populated correctly -- 
 SELECT * FROM AIRPORT; 
 SELECT * FROM FLIGHT_ROUTES; 
@@ -113,7 +116,7 @@ CREATE TABLE Booking (
     FOREIGN KEY (Passenger_ID) REFERENCES Passenger(Passenger_ID)
 );
 
-CREATE TABLE Flight_Booking (
+CREATE TABLE Flight_Schedule_Booking (
     Booking_ID INT,
     Schedule_ID INT,
     PRIMARY KEY (Booking_ID, Schedule_ID),
@@ -174,4 +177,52 @@ SELECT * FROM Flight_Booking;
 SELECT * FROM Additional_Item; 
 SELECT * FROM Inclusion; 
 
--- == i got too lazy to test crew assignment :( --
+CREATE TABLE Crew ( 
+    Crew_ID INT PRIMARY KEY AUTO_INCREMENT,
+    Last_Name VARCHAR(50) NOT NULL,
+    First_Name VARCHAR(50) NOT NULL,
+    Role VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE Assignment (
+    Assignment_ID INT PRIMARY KEY AUTO_INCREMENT,
+    Schedule_ID INT NOT NULL,
+    Date_of_Departure TIMESTAMP NOT NULL DEFAULT (CURRENT_DATE),
+    FOREIGN KEY (Schedule_ID) REFERENCES Schedule(Schedule_ID)
+);
+
+CREATE TABLE Crew_Assignment (
+    Crew_ID INT,
+    Assignment_ID INT,
+    PRIMARY KEY (Crew_ID, Assignment_ID),
+    FOREIGN KEY (Crew_ID) REFERENCES Crew(Crew_ID),
+    FOREIGN KEY (Assignment_ID) REFERENCES Assignment(Assignment_ID)
+);
+
+INSERT INTO CREW(Last_Name, First_Name, Role)
+VALUES("Reyes", "Peter", "Pilot"); 
+
+INSERT INTO CREW(Last_Name, First_Name, Role)
+VALUES("Cruz", "Jose", "First Officer");
+
+INSERT INTO CREW(Last_Name, First_Name, Role)
+VALUES("Ramos", "Maria", "Flight Attendant");
+
+INSERT INTO Assignment(Assignment_ID, Schedule_ID)
+VALUES(1, 2025120001);
+
+INSERT INTO Assignment(Assignment_ID, Schedule_ID)
+VALUES(2, 2025120002);
+
+INSERT INTO Crew_Assignment(Crew_ID, Assignment_ID)
+VALUES(1, 1); 
+
+INSERT INTO Crew_Assignment(Crew_ID, Assignment_ID)
+VALUES(2, 1); 
+
+INSERT INTO Crew_Assignment(Crew_ID, Assignment_ID)
+VALUES(2, 2); 
+
+SELECT * FROM Crew; 
+SELECT * FROM Assignment; 
+SELECT * FROM Crew_Assignment
