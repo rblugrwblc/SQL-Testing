@@ -136,7 +136,7 @@ CREATE TABLE Flight_Schedule_Booking (
 CREATE TABLE Additional_Item (
     Item_ID INT PRIMARY KEY AUTO_INCREMENT,
     Description VARCHAR(50) NOT NULL, 
-    Cost DECIMAL(10, 2) NULL
+    Cost DECIMAL(10, 2) NOT NULL
 );
 
 ------------------------------------------------------------
@@ -144,9 +144,9 @@ CREATE TABLE Additional_Item (
 -- Composite Key: (Booking_ID, Item_ID)
 ------------------------------------------------------------
 CREATE TABLE Inclusion (
-    Booking_ID INT,
-    Item_ID INT,
-    Quantity DECIMAL(10, 2) NOT NULL,
+    Booking_ID INT NOT NULL,
+    Item_ID INT NOT NULL,
+    Quantity INT NOT NULL,
     PRIMARY KEY (Booking_ID, Item_ID),
     FOREIGN KEY (Booking_ID) REFERENCES Booking(Booking_ID),
     FOREIGN KEY (Item_ID) REFERENCES Additional_Item(Item_ID)

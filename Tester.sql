@@ -127,13 +127,13 @@ CREATE TABLE Flight_Schedule_Booking (
 CREATE TABLE Additional_Item (
     Item_ID INT PRIMARY KEY AUTO_INCREMENT,
     Description VARCHAR(50) NOT NULL, 
-    Cost DECIMAL(10, 2) NULL
+    Cost DECIMAL(10, 2) NOT NULL
 );
 
 CREATE TABLE Inclusion (
-    Booking_ID INT,
-    Item_ID INT,
-    Quantity DECIMAL(10, 2) NOT NULL,
+    Booking_ID INT NOT NULL,
+    Item_ID INT NOT NULL,
+    Quantity INT NOT NULL,
     PRIMARY KEY (Booking_ID, Item_ID),
     FOREIGN KEY (Booking_ID) REFERENCES Booking(Booking_ID),
     FOREIGN KEY (Item_ID) REFERENCES Additional_Item(Item_ID)
@@ -146,10 +146,10 @@ VALUES ("Carlito", "Francisco", "P", "Male", "2025-12-21");
 INSERT INTO Booking(Passenger_ID)
 VALUES (1); 
 
-INSERT INTO Flight_Booking(Booking_ID, Schedule_ID)
+INSERT INTO Flight_Schedule_Booking(Booking_ID, Schedule_ID)
 VALUES(1, 2025120001); 
 
-INSERT INTO Flight_Booking(Booking_ID, Schedule_ID)
+INSERT INTO Flight_Schedule_Booking(Booking_ID, Schedule_ID)
 VALUES(1, 2025120002); 
 
 INSERT INTO Additional_Item(Description, Cost)
@@ -226,3 +226,17 @@ VALUES(2, 2);
 SELECT * FROM Crew; 
 SELECT * FROM Assignment; 
 SELECT * FROM Crew_Assignment
+
+-- FINAL CHECK 
+SELECT * FROM AIRPORT; 
+SELECT * FROM FLIGHT_ROUTES;
+SELECT * FROM FLIGHT; 
+SELECT * FROM SCHEDULE; 
+SELECT * FROM PASSENGER; 
+SELECT * FROM BOOKING;
+SELECT * FROM FLIGHT_SCHEDULE_BOOKING; 
+SELECT * FROM ADDITIONAL_ITEM; 
+SELECT * FROM INCLUSION; 
+SELECT * FROM CREW; 
+SELECT * FROM ASSIGNMENT; 
+SELECT * FROM CREW_ASSIGNMENT; 
