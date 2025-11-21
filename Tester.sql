@@ -229,7 +229,7 @@ VALUES(2, 2);
 
 SELECT * FROM Crew; 
 SELECT * FROM Assignment; 
-SELECT * FROM Crew_Assignment
+SELECT * FROM Crew_Assignment;
 
 -- FINAL CHECK 
 SELECT * FROM AIRPORT; 
