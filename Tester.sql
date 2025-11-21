@@ -1,16 +1,20 @@
 -- RESET
 DROP TABLE IF EXISTS Crew_Assignment;
-DROP TABLE IF EXISTS Flight_Assignment;
+DROP TABLE IF EXISTS Assignment;
 DROP TABLE IF EXISTS Crew;
+
 DROP TABLE IF EXISTS Inclusion;
 DROP TABLE IF EXISTS Additional_Item;
-DROP TABLE IF EXISTS Flight_Booking;
+
+DROP TABLE IF EXISTS Flight_Schedule_Booking;
 DROP TABLE IF EXISTS Booking;
 DROP TABLE IF EXISTS Passenger;
+
 DROP TABLE IF EXISTS Schedule;
 DROP TABLE IF EXISTS Flight;
 DROP TABLE IF EXISTS Flight_Routes;
 DROP TABLE IF EXISTS Airport;
+
 DROP DATABASE IF EXISTS MAGIS_AIR;
 
 CREATE DATABASE MAGIS_AIR;
@@ -60,10 +64,10 @@ CREATE TABLE Schedule (
 
 -- Populate Flight Routes --  
 
-INSERT AIRPORT (Airport_ID, City, Country)
+INSERT INTO AIRPORT (Airport_ID, City, Country)
 VALUES ("SIN", "Changi", "Singapore"); 
 
-INSERT AIRPORT (Airport_ID, City, Country)
+INSERT INTO AIRPORT (Airport_ID, City, Country)
 VALUES ("MNL", "Manila", "Philippines"); 
 
 -- route id 1 

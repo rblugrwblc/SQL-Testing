@@ -1,16 +1,19 @@
--- RESET
 DROP TABLE IF EXISTS Crew_Assignment;
-DROP TABLE IF EXISTS Flight_Assignment;
+DROP TABLE IF EXISTS Assignment;
 DROP TABLE IF EXISTS Crew;
+
 DROP TABLE IF EXISTS Inclusion;
 DROP TABLE IF EXISTS Additional_Item;
-DROP TABLE IF EXISTS Flight_Booking;
+
+DROP TABLE IF EXISTS Flight_Schedule_Booking;
 DROP TABLE IF EXISTS Booking;
 DROP TABLE IF EXISTS Passenger;
+
 DROP TABLE IF EXISTS Schedule;
 DROP TABLE IF EXISTS Flight;
 DROP TABLE IF EXISTS Flight_Routes;
 DROP TABLE IF EXISTS Airport;
+
 DROP DATABASE IF EXISTS MAGIS_AIR;
 
 CREATE DATABASE MAGIS_AIR;
@@ -19,7 +22,7 @@ USE MAGIS_AIR;
 ------------------------------------------------------------
 -- Airport
 -- PK Format:    AAA 
-    -- valid 3-letter IATA airport code
+-- valid 3-letter IATA airport code
 -- Example: MNL, CEB, HKG
 ------------------------------------------------------------
 CREATE TABLE Airport (
@@ -31,7 +34,7 @@ CREATE TABLE Airport (
 ------------------------------------------------------------
 -- Flight Routes
 -- PK Format:    XXXX
-    -- Auto-Incrementing Route Numbers
+-- Auto-Incrementing Route Numbers
 -- Example: 1, 2, 3...
 ------------------------------------------------------------
 CREATE TABLE Flight_Routes (
@@ -46,11 +49,11 @@ CREATE TABLE Flight_Routes (
 ------------------------------------------------------------
 -- Flight
 -- PK Format:    MA XXXX
-    -- MA:  denotes "Magis Air"
-    -- XXX: denotes a unique identifying aircraft number 
+--      MA:  denotes "Magis Air"
+-- XXX: denotes a unique identifying aircraft number 
 -- Example: MA 17, MA 800, MA 167
 -- Notes: 
-    -- Duration takes into account if overlfow in time 
+-- Duration takes into account if overlfow in time 
 ------------------------------------------------------------
 CREATE TABLE Flight (
     Flight_ID VARCHAR(6) PRIMARY KEY NOT NULL,  
@@ -75,9 +78,9 @@ CREATE TABLE Flight (
 ------------------------------------------------------------
 -- Schedule
 -- PK Format:    YYYYMMZZZZZ
-    -- YYYY: current year
-    -- MM:   current month 
-    -- ZZZZZ: identifying sequence of numbers (auto incremented)  
+-- YYYY: current year
+-- MM:   current month 
+-- ZZZZZ: identifying sequence of numbers (auto incremented)  
 -- Example: 20250100001, 20250100002, 20250100067, 20250100076
 ------------------------------------------------------------
 CREATE TABLE Schedule (
