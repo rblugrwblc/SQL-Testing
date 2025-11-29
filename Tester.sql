@@ -88,7 +88,7 @@ VALUES("MA 801", "23:55:00", "20:25:00", 2088.00, 2);
 
 -- MA 801 happens on dec 23
 INSERT INTO SCHEDULE(Schedule_ID, Flight_ID, Date_of_Flight) 
-VALUES (2025120001, "MA 801", "2025-12-23"); 
+VALUES (1, "MA 801", "2025-12-23"); 
 
 -- MA 800 happens on dec 24
 -- PK: 2025120002
@@ -151,10 +151,10 @@ INSERT INTO Booking(Passenger_ID)
 VALUES (1); 
 
 INSERT INTO Flight_Schedule_Booking(Booking_ID, Schedule_ID)
-VALUES(1, 2025120001); 
+VALUES(1, 1); 
 
 INSERT INTO Flight_Schedule_Booking(Booking_ID, Schedule_ID)
-VALUES(1, 2025120002); 
+VALUES(1, 2); 
 
 INSERT INTO Additional_Item(Description, Cost)
 VALUES("Additional Baggage Allownace (5kg)", 474.00); 
@@ -213,10 +213,10 @@ INSERT INTO CREW(Last_Name, First_Name, Role)
 VALUES("Ramos", "Maria", "Flight Attendant");
 
 INSERT INTO Assignment(Assignment_ID, Schedule_ID)
-VALUES(1, 2025120001);
+VALUES(1, 1);
 
 INSERT INTO Assignment(Assignment_ID, Schedule_ID)
-VALUES(2, 2025120002);
+VALUES(2, 2);
 
 INSERT INTO Crew_Assignment(Crew_ID, Assignment_ID)
 VALUES(1, 1); 

@@ -34,7 +34,7 @@ CREATE TABLE Airport (
 ------------------------------------------------------------
 -- Flight Routes
 -- PK Format:    XXXX
--- Auto-Incrementing Route Numbers
+--   XXXX: identifying sequence of numbers (Auto Incrementing)
 -- Example: 1, 2, 3...
 ------------------------------------------------------------
 CREATE TABLE Flight_Routes (
@@ -76,12 +76,10 @@ CREATE TABLE Flight (
 );
 
 ------------------------------------------------------------
--- Schedule
--- PK Format:    YYYYMMZZZZZ
--- YYYY: current year
--- MM:   current month 
--- ZZZZZ: identifying sequence of numbers (auto incremented)  
--- Example: 20250100001, 20250100002, 20250100067, 20250100076
+-- Flight Routes
+-- PK Format:    XXXX
+--   XXXX: identifying sequence of numbers (Auto Incrementing)
+-- Example: 67, 2, 3...
 ------------------------------------------------------------
 CREATE TABLE Schedule (
     Schedule_ID INT PRIMARY KEY AUTO_INCREMENT,
@@ -93,7 +91,7 @@ CREATE TABLE Schedule (
 ------------------------------------------------------------
 -- Passenger
 -- PK Format:   XXX
-    -- XXX:  identifying sequence of numbers (Auto Incrementing) 
+--   XXXX: identifying sequence of numbers (Auto Incrementing)
 -- Example: 1, 2, 3, 67 
 ------------------------------------------------------------
 CREATE TABLE Passenger (
@@ -133,7 +131,7 @@ CREATE TABLE Flight_Schedule_Booking (
 ------------------------------------------------------------
 -- Additional Item
 -- PK Format:    XXX
-    -- XXX: identifying sequence of numbers (Auto Incrementing)
+--   XXX: identifying sequence of numbers (Auto Incrementing)
 -- Example: 001, 002, 003, 067
 ------------------------------------------------------------
 CREATE TABLE Additional_Item (
@@ -158,7 +156,7 @@ CREATE TABLE Inclusion (
 ------------------------------------------------------------
 -- Crew
 -- PK Format:  XXX
-    -- XXX: identifying sequence of numbers (Auto Incrementing) 
+--   XXX: identifying sequence of numbers (Auto Incrementing) 
 -- Example: 001, 002, 067, 235
 ------------------------------------------------------------
 CREATE TABLE Crew ( 
@@ -171,7 +169,7 @@ CREATE TABLE Crew (
 ------------------------------------------------------------
 -- Flight Assignment
 -- PK FORMAT: XXX
-    -- XXX: identifying sequence of numbers (Auto Incrementing) 
+--   XXX: identifying sequence of numbers (Auto Incrementing) 
 -- Example: 067, 235, 729, 1092
 ------------------------------------------------------------
 CREATE TABLE Assignment (
